@@ -4,6 +4,8 @@ C++游戏开发的入门教程，利用SDL2（SDL3）开发一款太空战机类
 ## 项目简介
 此项目为教学演示用途，配套视频教程：[SDL2与太空战机](https://www.bilibili.com/video/BV1wSCFYQEyc/?share_source=copy_web&vd_source=38785218fa1d2c5dfde79f8b24baf0b6) 
 
+提示：仓库中包含了所有课节的代码，你可以根据视频教程的进度查找对应的代码。<img src=".screenshot/tags.png" style='width: 400px;' />
+
 本项目为CC0 1.0许可，这意味着你可以随意使用此代码且无需署名，但如果你给出Github链接或者视频教程的链接，我会非常感激。
 
 ## 游戏截图
