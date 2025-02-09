@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "SDL.h"
+#include "Object.h"
 
 class Game
 {
@@ -44,6 +45,9 @@ private:
     int FPS = 60;
     Uint32 frameTime;
     float deltaTime;
+
+    Background nearStars;
+    Background farStars;
 };
 
 #endif
