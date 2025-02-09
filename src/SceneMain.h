@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "Object.h"
+#include <list>
 
 
 class Game;
@@ -12,17 +13,24 @@ public:
     SceneMain();
     ~SceneMain();
 
-    void update() override;
+    void update(float deltaTime) override;
     void render() override;
     void handleEvent(SDL_Event* event) override;
     void init() override;
     void clean() override;
 
-    void keyboardControl();
+    void keyboardControl(float deltaTime);
+    void shootPlayer();
+    void updatePlayerProjectiles(float deltaTime);
+    void renderPlayerProjectiles();
 
 private:
     Game &game;
     Player player;
+    // 创建每个物体的模版
+    ProjectilePlayer projectilePlayerTemplate;
+
+    std::list<ProjectilePlayer*> projectilesPlayer;
     
 };
 
