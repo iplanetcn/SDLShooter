@@ -14,6 +14,10 @@ void SceneEnd::init()
 
 void SceneEnd::update(float deltaTime)
 {
+    blinkTimer -= deltaTime;
+    if (blinkTimer <= 0){
+        blinkTimer += 1.0f;
+    }
 }
 
 void SceneEnd::render()
@@ -61,7 +65,14 @@ void SceneEnd::renderPhase1()
     game.renderTextCentered(instrutionText, 0.6, false);
 
     if (name != ""){
-        game.renderTextCentered(name, 0.8, false);
+        SDL_Point p = game.renderTextCentered(name, 0.8, false);
+        if (blinkTimer < 0.5){
+            game.renderTextPos("_", p.x, p.y);
+        }
+    }else{
+        if (blinkTimer < 0.5){
+            game.renderTextCentered("_", 0.8, false);
+        }
     }
 }
 
