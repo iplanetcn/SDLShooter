@@ -18,6 +18,8 @@ private:
 
     void renderPhase1();
     void renderPhase2();
+
+    void removeLastUTF8Char(std::string& str);
 };
 
 

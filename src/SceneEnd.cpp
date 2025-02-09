@@ -41,7 +41,7 @@ void SceneEnd::handleEvent(SDL_Event *event)
                 SDL_StopTextInput();
             }
             if (event->key.keysym.scancode == SDL_SCANCODE_BACKSPACE){
-                name.pop_back();
+                removeLastUTF8Char(name);
             }
         }
     }
@@ -67,4 +67,18 @@ void SceneEnd::renderPhase1()
 
 void SceneEnd::renderPhase2()
 {
+}
+
+void SceneEnd::removeLastUTF8Char(std::string &str)
+{
+    if (str.empty()) return;
+    
+    auto lastchar = str.back();
+    if ((lastchar & 0b10000000) == 0b10000000) { // 中文字符的后续字节
+        str.pop_back();
+        while((str.back() & 0b11000000) != 0b11000000) { // 判断是否是中文字符的第一个字节
+            str.pop_back();
+        }
+    }
+    str.pop_back();
 }
