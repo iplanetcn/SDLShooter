@@ -8,6 +8,7 @@
 #include <map>
 #include <SDL.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
 
 class Game;
@@ -49,6 +50,8 @@ private:
     Player player;
     Mix_Music* bgm;
     SDL_Texture* uiHealth;
+    TTF_Font* scoreFont;
+    int score = 0;
 
     bool isDead = false; // 玩家是否死亡
     std::mt19937 gen; // 随机数生成器
