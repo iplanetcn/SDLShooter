@@ -219,12 +219,17 @@ SDL_Point Game::renderTextCentered(std::string text, float posY, bool isTitle)
     return {rect.x + rect.w, y};
 }
 
-void Game::renderTextPos(std::string text, int posX, int posY)
+void Game::renderTextPos(std::string text, int posX, int posY, bool isLeft)
 {
     SDL_Color color = {255, 255, 255, 255};
     SDL_Surface *surface = TTF_RenderUTF8_Solid(textFont, text.c_str(), color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_Rect rect = {posX, posY, surface->w, surface->h};
+    SDL_Rect rect;
+    if (isLeft){
+        rect = {posX, posY, surface->w, surface->h};
+    }else{
+        rect = {getWindowWidth() - posX - surface->w, posY, surface->w, surface->h};
+    }
     SDL_RenderCopy(renderer, texture, NULL, &rect);
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
@@ -262,5 +267,13 @@ void Game::renderBackground()
             SDL_RenderCopy(renderer, nearStars.texture, nullptr, &dstRect);
         }
         
+    }
+}
+
+void Game::insertLeaderBoard(int score, std::string name)
+{
+    leaderBoard.insert({score, name});
+    if (leaderBoard.size() > 8){
+        leaderBoard.erase(--leaderBoard.end());
     }
 }

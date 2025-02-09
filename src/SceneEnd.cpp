@@ -1,4 +1,5 @@
 #include "SceneEnd.h"
+#include "SceneMain.h"
 #include "Game.h"
 #include <string>
 
@@ -43,6 +44,10 @@ void SceneEnd::handleEvent(SDL_Event *event)
             if (event->key.keysym.scancode == SDL_SCANCODE_RETURN){
                 isTyping = false;
                 SDL_StopTextInput();
+                if (name == ""){
+                    name = "无名氏";
+                }
+                game.insertLeaderBoard(game.getFinalScore(), name);
             }
             if (event->key.keysym.scancode == SDL_SCANCODE_BACKSPACE){
                 removeLastUTF8Char(name);
@@ -50,7 +55,12 @@ void SceneEnd::handleEvent(SDL_Event *event)
         }
     }
     else{
-        // TODO
+        if (event->type == SDL_KEYDOWN){
+            if (event->key.keysym.scancode == SDL_SCANCODE_J){
+                auto sceneMain = new SceneMain();
+                game.changeScene(sceneMain);
+            }
+        }
     }
 }
 
@@ -78,6 +88,21 @@ void SceneEnd::renderPhase1()
 
 void SceneEnd::renderPhase2()
 {
+    game.renderTextCentered("得分榜", 0.05, true);
+    auto posY = 0.2 * game.getWindowHeight();
+    auto i = 1;
+    for (auto item : game.getLeaderBoard()){
+        std::string name = std::to_string(i) + ". " + item.second;
+        std::string score = std::to_string(item.first);
+        game.renderTextPos(name, 100, posY);
+        game.renderTextPos(score, 100, posY, false);
+        posY += 45;
+        i++;
+    }
+    if (blinkTimer < 0.5){
+        game.renderTextCentered("按 J 键重新开始游戏", 0.85, false);
+    }
+    
 }
 
 void SceneEnd::removeLastUTF8Char(std::string &str)
