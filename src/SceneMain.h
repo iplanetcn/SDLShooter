@@ -29,6 +29,7 @@ private:
     SDL_Texture* uiHealth;
     TTF_Font* scoreFont;
     int score = 0;
+    float timerEnd = 0.0f;
 
     bool isDead = false; // 玩家是否死亡
     std::mt19937 gen; // 随机数生成器
@@ -65,6 +66,7 @@ private:
     void updatePlayerProjectiles(float deltaTime);
     void keyboardControl(float deltaTime);
     void spawEnemy();
+    void changeSceneDelayed(float deltaTime, float delay);
 
     // 其它
     void playerGetItem(Item* item);
@@ -73,6 +75,7 @@ private:
     SDL_FPoint getDirection(Enemy* enemy);
     void enemyExplode(Enemy* enemy);
     void dropItem(Enemy* enemy);
+    
 };
 
 

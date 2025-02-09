@@ -1,5 +1,6 @@
 #include "SceneMain.h"
 #include "SceneTitle.h"
+#include "SceneEnd.h"
 #include "Game.h"
 #include <SDL.h>
 #include <SDL_image.h>
@@ -19,6 +20,9 @@ void SceneMain::update(float deltaTime)
     updatePlayer(deltaTime);
     updateExplosions(deltaTime);
     updateItems(deltaTime);
+    if (isDead){
+        changeSceneDelayed(deltaTime, 3); // 3秒后切换到标题场景
+    }
 }
 
 void SceneMain::render()
@@ -336,6 +340,15 @@ void SceneMain::spawEnemy()
     enemy->position.x = dis(gen) * (game.getWindowWidth() - enemy->width);
     enemy->position.y = - enemy->height;
     enemies.push_back(enemy);
+}
+
+void SceneMain::changeSceneDelayed(float deltaTime, float delay)
+{
+    timerEnd += deltaTime;
+    if (timerEnd > delay){
+        auto sceneEnd = new SceneEnd();
+        game.changeScene(sceneEnd);
+    }
 }
 
 void SceneMain::updateEnemies(float deltaTime)
