@@ -5,6 +5,9 @@
 #include "Object.h"
 #include <list>
 #include <random>
+#include <map>
+#include <SDL.h>
+#include <SDL_mixer.h>
 
 
 class Game;
@@ -43,6 +46,8 @@ public:
 private:
     Game &game;
     Player player;
+    Mix_Music* bgm;
+
     bool isDead = false; // 玩家是否死亡
     std::mt19937 gen; // 随机数生成器
     std::uniform_real_distribution<float> dis; // 随机数分布器
@@ -59,6 +64,7 @@ private:
     std::list<ProjectileEnemy*> projectilesEnemy;
     std::list<Explosion*> explosions;
     std::list<Item*> items;
+    std::map<std::string, Mix_Chunk*> sounds; // 存储音效
     
 };
 

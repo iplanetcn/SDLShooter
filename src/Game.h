@@ -22,6 +22,9 @@ public:
     void update(float deltaTime);
     void render();
 
+    void backgroundUpdate(float deltaTime);
+    void renderBackground();
+
     SDL_Window* getWindow() { return window; }
     SDL_Renderer* getRenderer() { return renderer; }
     int getWindowWidth() { return windowWidth; }
