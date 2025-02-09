@@ -428,6 +428,7 @@ void SceneMain::updatePlayer(float)
         explosion->startTime = currentTime;
         explosions.push_back(explosion);
         Mix_PlayChannel(-1, sounds["player_explode"], 0);
+        game.setFinalScore(score);
         return;
     }
     for (auto enemy : enemies){
