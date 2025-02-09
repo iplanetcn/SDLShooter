@@ -5,11 +5,18 @@
 
 void SceneEnd::init()
 {
+    // 载入背景音乐
+    bgm = Mix_LoadMUS("assets/music/06_Battle_in_Space_Intro.ogg");
+    if (!bgm) {
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "Failed to load music: %s", Mix_GetError());
+    }
+    Mix_PlayMusic(bgm, -1);
+
     if (!SDL_IsTextInputActive()){
         SDL_StartTextInput();
     }
     if (!SDL_IsTextInputActive()){
-        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "SDL", "Failed to start text input: %s", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "Failed to start text input: %s", SDL_GetError());
     }
 }
 
@@ -32,6 +39,10 @@ void SceneEnd::render()
 
 void SceneEnd::clean()
 {
+    if (bgm != nullptr){
+        Mix_HaltMusic();
+        Mix_FreeMusic(bgm);
+    }
 }
 
 void SceneEnd::handleEvent(SDL_Event *event)

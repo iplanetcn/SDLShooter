@@ -52,6 +52,7 @@ private:
     TTF_Font* textFont;
 
     bool isRunning = true;
+    bool isFullscreen = false;
     Scene* currentScene = nullptr;
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
