@@ -2,6 +2,10 @@
 #define SCENE_MAIN_H
 
 #include "Scene.h"
+#include "Object.h"
+
+
+class Game;
 
 class SceneMain : public Scene {
 public:
@@ -15,7 +19,9 @@ public:
     void clean() override;
 
 private:
-
+    Game &game;
+    Player player;
+    
 };
 
 
