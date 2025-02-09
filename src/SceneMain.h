@@ -15,7 +15,6 @@ class Game;
 
 class SceneMain : public Scene {
 public:
-    SceneMain();
     ~SceneMain();
 
     void update(float deltaTime) override;
@@ -24,29 +23,7 @@ public:
     void init() override;
     void clean() override;
 
-    void keyboardControl(float deltaTime);
-    void shootPlayer();
-    void updatePlayerProjectiles(float deltaTime);
-    void renderPlayerProjectiles();
-    void renderEnemyProjectiles();
-    void spawEnemy();
-    void updateEnemies(float deltaTime);
-    void updateEnemyProjectiles(float deltaTime);
-    void updatePlayer(float deltaTime);
-    void renderEnemies();
-    void shootEnemy(Enemy* enemy);
-    SDL_FPoint getDirection(Enemy* enemy);
-    void enemyExplode(Enemy* enemy);
-    void updateExplosions(float deltaTime);
-    void renderExplosions();
-    void dropItem(Enemy* enemy);
-    void updateItems(float deltaTime);
-    void playerGetItem(Item* item);
-    void renderItems();
-    void renderUI();
-
 private:
-    Game &game;
     Player player;
     Mix_Music* bgm;
     SDL_Texture* uiHealth;
@@ -71,6 +48,31 @@ private:
     std::list<Item*> items;
     std::map<std::string, Mix_Chunk*> sounds; // 存储音效
     
+    // 渲染相关
+    void renderItems();
+    void renderUI();
+    void renderExplosions();
+    void renderPlayerProjectiles();
+    void renderEnemyProjectiles();
+    void renderEnemies();
+
+    // 更新相关
+    void updateEnemies(float deltaTime);
+    void updateEnemyProjectiles(float deltaTime);
+    void updatePlayer(float deltaTime);
+    void updateItems(float deltaTime);
+    void updateExplosions(float deltaTime);
+    void updatePlayerProjectiles(float deltaTime);
+    void keyboardControl(float deltaTime);
+    void spawEnemy();
+
+    // 其它
+    void playerGetItem(Item* item);
+    void shootPlayer();
+    void shootEnemy(Enemy* enemy);
+    SDL_FPoint getDirection(Enemy* enemy);
+    void enemyExplode(Enemy* enemy);
+    void dropItem(Enemy* enemy);
 };
 
 

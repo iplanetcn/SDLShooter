@@ -1,12 +1,9 @@
 #include "SceneMain.h"
+#include "SceneTitle.h"
 #include "Game.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <random>
-
-SceneMain::SceneMain() : game(Game::getInstance())
-{
-}
 
 SceneMain::~SceneMain()
 {
@@ -48,8 +45,14 @@ void SceneMain::render()
     renderUI();
 }
 
-void SceneMain::handleEvent(SDL_Event*)
+void SceneMain::handleEvent(SDL_Event* event)
 {
+    if (event->type == SDL_KEYDOWN){
+        if (event->key.keysym.scancode == SDL_SCANCODE_ESCAPE){
+            auto sceneTitle = new SceneTitle();
+            game.changeScene(sceneTitle);
+        }
+    }
 }
 
 void SceneMain::init()

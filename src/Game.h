@@ -2,8 +2,11 @@
 #define GAME_H
 
 #include "Scene.h"
-#include "SDL.h"
 #include "Object.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <string>
 
 class Game
 {
@@ -23,9 +26,12 @@ public:
     void update(float deltaTime);
     void render();
 
-    void backgroundUpdate(float deltaTime);
-    void renderBackground();
+    // 渲染文字函数
+    void renderTextCentered(std::string text, float posY, bool isTitle);
 
+    // setters
+
+    // getters
     SDL_Window* getWindow() { return window; }
     SDL_Renderer* getRenderer() { return renderer; }
     int getWindowWidth() { return windowWidth; }
@@ -35,6 +41,9 @@ private:
     // 删除拷贝与赋值构造函数
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
+
+    TTF_Font* titleFont;
+    TTF_Font* textFont;
 
     bool isRunning = true;
     Scene* currentScene = nullptr;
@@ -48,6 +57,9 @@ private:
 
     Background nearStars;
     Background farStars;
+
+    void backgroundUpdate(float deltaTime);
+    void renderBackground();
 };
 
 #endif
