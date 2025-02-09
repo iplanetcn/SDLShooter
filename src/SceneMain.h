@@ -42,11 +42,13 @@ public:
     void updateItems(float deltaTime);
     void playerGetItem(Item* item);
     void renderItems();
+    void renderUI();
 
 private:
     Game &game;
     Player player;
     Mix_Music* bgm;
+    SDL_Texture* uiHealth;
 
     bool isDead = false; // 玩家是否死亡
     std::mt19937 gen; // 随机数生成器
