@@ -69,6 +69,8 @@ private:
 
     void backgroundUpdate(float deltaTime);
     void renderBackground();
+    void saveData();
+    void loadData();
 };
 
 #endif

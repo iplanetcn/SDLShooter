@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <fstream>
 
 
 Game::Game()
@@ -13,6 +14,7 @@ Game::Game()
 
 Game::~Game()
 {
+    saveData(); // Save data before closing
     clean();
 }
 
@@ -117,6 +119,9 @@ void Game::init()
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "TTF_OpenFont: %s\n", TTF_GetError());
         isRunning = false;
     }
+
+    // 载入得分
+    loadData();
 
     currentScene = new SceneTitle();
     currentScene->init();
@@ -267,6 +272,35 @@ void Game::renderBackground()
             SDL_RenderCopy(renderer, nearStars.texture, nullptr, &dstRect);
         }
         
+    }
+}
+
+void Game::saveData()
+{
+    // 保存得分榜的数据
+    std::ofstream file("assets/save.dat");
+    if (!file.is_open()){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to open save file");
+        return;
+    }
+    for (const auto &entry : leaderBoard){
+        file << entry.first << " " << entry.second << std::endl;
+    }
+}
+
+void Game::loadData()
+{
+    // 加载得分榜的数据
+    std::ifstream file("assets/save.dat");
+    if (!file.is_open()){
+        SDL_Log("Failed to open save file");
+        return;
+    }
+    leaderBoard.clear();
+    int score;
+    std::string name;
+    while (file >> score >> name){
+        leaderBoard.insert({score, name});
     }
 }
 
