@@ -24,9 +24,13 @@ public:
     void shootPlayer();
     void updatePlayerProjectiles(float deltaTime);
     void renderPlayerProjectiles();
+    void renderEnemyProjectiles();
     void spawEnemy();
     void updateEnemies(float deltaTime);
+    void updateEnemyProjectiles(float deltaTime);
     void renderEnemies();
+    void shootEnemy(Enemy* enemy);
+    SDL_FPoint getDirection(Enemy* enemy);
 
 private:
     Game &game;
@@ -36,10 +40,12 @@ private:
     // 创建每个物体的模版
     Enemy enemyTemplate;
     ProjectilePlayer projectilePlayerTemplate;
+    ProjectileEnemy projectileEnemyTemplate;
 
     // 创建每个物体的容器
     std::list<Enemy*> enemies;
     std::list<ProjectilePlayer*> projectilesPlayer;
+    std::list<ProjectileEnemy*> projectilesEnemy;
     
 };
 

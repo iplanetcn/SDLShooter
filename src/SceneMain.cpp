@@ -16,6 +16,7 @@ void SceneMain::update(float deltaTime)
 {
     keyboardControl(deltaTime);
     updatePlayerProjectiles(deltaTime);
+    updateEnemyProjectiles(deltaTime);
     spawEnemy();
     updateEnemies(deltaTime);
 }
@@ -24,6 +25,8 @@ void SceneMain::render()
 {
     // 渲染玩家子弹
     renderPlayerProjectiles();
+    //渲染敌机子弹
+    renderEnemyProjectiles();
     // 渲染玩家
     SDL_Rect playerRect = { static_cast<int>(player.position.x), 
                             static_cast<int>(player.position.y), 
@@ -66,6 +69,11 @@ void SceneMain::init()
     SDL_QueryTexture(enemyTemplate.texture, NULL, NULL, &enemyTemplate.width, &enemyTemplate.height);
     enemyTemplate.width /= 4;
     enemyTemplate.height /= 4;
+
+    projectileEnemyTemplate.texture = IMG_LoadTexture(game.getRenderer(), "assets/image/bullet-1.png");
+    SDL_QueryTexture(projectileEnemyTemplate.texture, NULL, NULL, &projectileEnemyTemplate.width, &projectileEnemyTemplate.height);
+    projectileEnemyTemplate.width /= 4;
+    projectileEnemyTemplate.height /= 4;
 }
 
 void SceneMain::clean()
@@ -85,6 +93,12 @@ void SceneMain::clean()
     }
     enemies.clear();
 
+    for (auto &projectile : projectilesEnemy){
+        if (projectile != nullptr){
+            delete projectile;
+        }
+    }
+
     // 清理模版
     if (player.texture != nullptr)
     {
@@ -96,6 +110,9 @@ void SceneMain::clean()
     }
     if (enemyTemplate.texture != nullptr){
         SDL_DestroyTexture(enemyTemplate.texture);
+    }
+    if (projectileEnemyTemplate.texture != nullptr){
+        SDL_DestroyTexture(projectileEnemyTemplate.texture);
     }
 }
 
@@ -178,6 +195,21 @@ void SceneMain::renderPlayerProjectiles()
     }
 }
 
+void SceneMain::renderEnemyProjectiles()
+{
+    for (auto projectile : projectilesEnemy){
+        SDL_Rect projectileRect = {
+            static_cast<int>(projectile->position.x),
+            static_cast<int>(projectile->position.y),
+            projectile->width,
+            projectile->height
+        };
+        // SDL_RenderCopy(game.getRenderer(), projectile->texture, NULL, &projectileRect);
+        float angle = atan2(projectile->direction.y, projectile->direction.x) * 180 / M_PI - 90;
+        SDL_RenderCopyEx(game.getRenderer(), projectile->texture, NULL, &projectileRect, angle, NULL, SDL_FLIP_NONE);
+    }
+}
+
 void SceneMain::spawEnemy()
 {
     if (dis(gen) > 1 / 60.0f){
@@ -191,12 +223,36 @@ void SceneMain::spawEnemy()
 
 void SceneMain::updateEnemies(float deltaTime)
 {
+    auto currentTime = SDL_GetTicks();
     for (auto it = enemies.begin(); it != enemies.end();){
         auto enemy = *it;
         enemy->position.y += enemy->speed * deltaTime;
         if (enemy->position.y > game.getWindowHeight()){
             delete enemy;
             it = enemies.erase(it);
+        }else {
+            if (currentTime - enemy->lastShootTime > enemy->coolDown){
+                shootEnemy(enemy);
+                enemy->lastShootTime = currentTime;
+            }
+            ++it;
+        }
+    }
+}
+
+void SceneMain::updateEnemyProjectiles(float deltaTime)
+{
+    auto margin = 32;
+    for (auto it = projectilesEnemy.begin(); it != projectilesEnemy.end();){
+        auto projectile = *it;
+        projectile->position.x += projectile->speed * projectile ->direction.x * deltaTime;
+        projectile->position.y += projectile->speed * projectile->direction.y * deltaTime;
+        if (projectile->position.y > game.getWindowHeight() + margin ||
+            projectile->position.y < - margin ||
+            projectile->position.x < - margin ||
+            projectile->position.x > game.getWindowWidth() + margin){
+            delete projectile;
+            it = projectilesEnemy.erase(it);
         }else {
             ++it;
         }
@@ -214,4 +270,23 @@ void SceneMain::renderEnemies()
         };
         SDL_RenderCopy(game.getRenderer(), enemy->texture, NULL, &enemyRect);
     }
+}
+
+void SceneMain::shootEnemy(Enemy *enemy)
+{
+    auto projectile = new ProjectileEnemy(projectileEnemyTemplate);
+    projectile->position.x = enemy->position.x + enemy->width / 2 - projectile->width / 2;
+    projectile->position.y = enemy->position.y + enemy->height / 2 - projectile->height / 2;
+    projectile->direction = getDirection(enemy);
+    projectilesEnemy.push_back(projectile);
+}
+
+SDL_FPoint SceneMain::getDirection(Enemy *enemy)
+{
+    auto x = (player.position.x + player.width / 2) - (enemy->position.x + enemy->width / 2);
+    auto y = (player.position.y + player.height / 2) - (enemy->position.y + enemy->height / 2);
+    auto length = sqrt(x * x + y * y);
+    x /= length;
+    y /= length;
+    return SDL_FPoint{x, y};
 }
