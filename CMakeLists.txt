@@ -1,5 +1,5 @@
 # 标题
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(SDLShooter VERSION 0.1.0 LANGUAGES C CXX)
 
 # 设置C++标准
@@ -26,6 +26,6 @@ find_package(SDL2 REQUIRED)
 add_executable(${TARGET} main.cpp)
 
 # 链接库
-target_link_libraries(${TARGET} 
-                        SDL2::SDL2 
-                        SDL2::SDL2main)
+target_link_libraries(${TARGET}
+                        ${SDL2_LIBRARIES}
+                        )
