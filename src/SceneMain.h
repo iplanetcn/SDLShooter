@@ -28,13 +28,16 @@ public:
     void spawEnemy();
     void updateEnemies(float deltaTime);
     void updateEnemyProjectiles(float deltaTime);
+    void updatePlayer(float deltaTime);
     void renderEnemies();
     void shootEnemy(Enemy* enemy);
     SDL_FPoint getDirection(Enemy* enemy);
+    void enemyExplode(Enemy* enemy);
 
 private:
     Game &game;
     Player player;
+    bool isDead = false; // 玩家是否死亡
     std::mt19937 gen; // 随机数生成器
     std::uniform_real_distribution<float> dis; // 随机数分布器
     // 创建每个物体的模版

@@ -7,8 +7,9 @@ struct Player{
     SDL_FPoint position = {0, 0};
     int width = 0;
     int height = 0;
-    int speed = 200;
-    Uint32 coolDown = 500;
+    int speed = 300;
+    int currentHealth = 3;
+    Uint32 coolDown = 300;
     Uint32 lastShootTime = 0;
 };
 
@@ -17,8 +18,9 @@ struct Enemy{
     SDL_FPoint position = {0, 0};
     int width = 0;
     int height = 0;
-    int speed = 200;
-    Uint32 coolDown = 1000;
+    int speed = 150;
+    int currentHealth = 2;
+    Uint32 coolDown = 2000;
     Uint32 lastShootTime = 0;
 };
 
@@ -27,7 +29,8 @@ struct ProjectilePlayer{
     SDL_FPoint position = {0, 0};
     int width = 0;
     int height = 0;
-    int speed = 400;
+    int speed = 600;
+    int damage = 1;
 };
 
 struct ProjectileEnemy{
@@ -37,6 +40,7 @@ struct ProjectileEnemy{
     int width = 0;
     int height = 0;
     int speed = 400;
+    int damage = 1;
 };
 
 #endif // OBJECT_H
