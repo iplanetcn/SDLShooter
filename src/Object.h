@@ -2,6 +2,12 @@
 #define OBJECT_H
 #include <SDL.h>
 
+enum class ItemType{
+    Life,
+    Shield,
+    Time
+};
+
 struct Player{
     SDL_Texture* texture = nullptr;
     SDL_FPoint position = {0, 0};
@@ -9,6 +15,7 @@ struct Player{
     int height = 0;
     int speed = 300;
     int currentHealth = 3;
+    int maxHealth = 3;
     Uint32 coolDown = 300;
     Uint32 lastShootTime = 0;
 };
@@ -52,6 +59,17 @@ struct Explosion{
     int totlaFrame = 0;
     Uint32 startTime = 0;
     Uint32 FPS = 10;
+};
+
+struct Item{
+    SDL_Texture* texture = nullptr;
+    SDL_FPoint position = {0, 0};
+    SDL_FPoint direction = {0, 0};
+    int width = 0;
+    int height = 0;
+    int speed = 200;
+    int bounceCount = 3;
+    ItemType type = ItemType::Life;
 };
 
 #endif // OBJECT_H
