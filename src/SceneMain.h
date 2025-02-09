@@ -33,6 +33,8 @@ public:
     void shootEnemy(Enemy* enemy);
     SDL_FPoint getDirection(Enemy* enemy);
     void enemyExplode(Enemy* enemy);
+    void updateExplosions(float deltaTime);
+    void renderExplosions();
 
 private:
     Game &game;
@@ -44,11 +46,13 @@ private:
     Enemy enemyTemplate;
     ProjectilePlayer projectilePlayerTemplate;
     ProjectileEnemy projectileEnemyTemplate;
+    Explosion explosionTemplate;
 
     // 创建每个物体的容器
     std::list<Enemy*> enemies;
     std::list<ProjectilePlayer*> projectilesPlayer;
     std::list<ProjectileEnemy*> projectilesEnemy;
+    std::list<Explosion*> explosions;
     
 };
 

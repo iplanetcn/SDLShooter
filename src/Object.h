@@ -43,4 +43,15 @@ struct ProjectileEnemy{
     int damage = 1;
 };
 
+struct Explosion{
+    SDL_Texture* texture = nullptr;
+    SDL_FPoint position = {0, 0};
+    int width = 0;
+    int height = 0;
+    int currentFrame = 0;
+    int totlaFrame = 0;
+    Uint32 startTime = 0;
+    Uint32 FPS = 10;
+};
+
 #endif // OBJECT_H
