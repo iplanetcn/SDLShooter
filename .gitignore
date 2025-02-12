@@ -9,6 +9,8 @@
 # build
 build/
 build-*/
+*-darwin
+*-Darwin
 
 # Prerequisites
 *.d
