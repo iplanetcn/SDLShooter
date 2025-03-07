@@ -69,6 +69,8 @@ sudo apt install cmake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-t
 	- 如果无法科学上网，推荐国内可用且下载量大的，例如 `CodeGeeX`，`fitten`等。
 	- 如果能够科学上网，免费的推荐`Codeium`，付费的推荐 `Github Copilot`。
 
+## 素材包下载
+百度网盘：https://pan.baidu.com/s/1sTj6cp49sxvMWmfWGhvmgw?pwd=2bk8
 
 ## 致谢
 游戏素材来自于以下作者，均为CC0 1.0许可/无要求（你可以随意使用而无需署名），感谢他们的贡献：
