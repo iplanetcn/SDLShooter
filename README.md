@@ -55,6 +55,7 @@ sudo apt install cmake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-t
 <img src=".screenshot/463dd4c2280d54b6f1ac16634653b4de.png" style='width: 800px;' />
 
 2. 分别下载[sdl2](https://github.com/libsdl-org/SDL/releases/)，[SDL2-image](https://github.com/libsdl-org/SDL_image/releases), [SDL2-mixer](https://github.com/libsdl-org/SDL_mixer/releases), [sdl2-ttf](https://github.com/libsdl-org/SDL_ttf/releases) 的msvc开发版。<img src=".screenshot/1dd680c2fdcfecbdb45534d6d5f78501.png" style='width: 800px;' /> 下载后将4个文件全部解压到任意指定文件夹中（例如 `C:\Library\SDL2`）。<img src=".screenshot/bfbeb9fe00f29d39aea12306c0cf69c8.png" style='width: 800px;' />
+> 如果因为网络因素下载困难，也可以直接使用我下载好的SDL库：[百度网盘](https://pan.baidu.com/s/1aGyLFfrQQlOylKy03WLL-g?pwd=hmjz)，版本与教程相同
 
 3. 设置环境变量，将上一步得到的`文件夹路径` 及 `文件夹路径\lib\x64` 添加到Path变量中<img src=".screenshot/03c93aa96af29d93c4889cc10c14a123.png" />
 
